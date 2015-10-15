@@ -15,24 +15,29 @@ public class CypherTabWriter implements CypherResultWriter {
 
 	@Override
 	public void setColumns(List<String> columns) {
-		this.columns = columns;
+		if(columns != null && columns.size() > 0){
+			this.columns = columns;
 
-		writeTo(columns.get(0));
-		for(int i = 1; i < columns.size(); ++i){
-			writeTo("\t" + columns.get(i));
+			writeTo(columns.get(0));
+			for(int i = 1; i < columns.size(); ++i){
+				writeTo("\t" + columns.get(i));
+			}
+			writeTo("\n");
+			flushAll();
 		}
-		writeTo("\n");
-		flushAll();
 	}
 
 	@Override
 	public void addRow(Map<String, Object> row) {
-		writeTo(row.get(columns.get(0)).toString());
-		for(int i = 1; i < columns.size(); ++i){
-			writeTo("\t" + row.get(columns.get(i)).toString());
+		if(row != null && row.size() > 0){
+		
+			writeTo(row.get(columns.get(0)).toString());
+			for(int i = 1; i < columns.size(); ++i){
+				writeTo("\t" + row.get(columns.get(i)).toString());
+			}
+			writeTo("\n");
+			flushAll();
 		}
-		writeTo("\n");
-		flushAll();
 	}
 
 	@Override

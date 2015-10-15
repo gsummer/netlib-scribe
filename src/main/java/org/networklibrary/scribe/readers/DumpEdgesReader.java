@@ -3,6 +3,7 @@ package org.networklibrary.scribe.readers;
 import java.io.BufferedWriter;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.util.List;
 
 import org.neo4j.graphdb.Direction;
 import org.neo4j.graphdb.GraphDatabaseService;
@@ -15,11 +16,13 @@ public class DumpEdgesReader {
 
 	private GraphDatabaseService graph;
 	private String filename;
+	private List<String> extras;
 	
 	
-	public DumpEdgesReader(GraphDatabaseService graph, String filename) {
+	public DumpEdgesReader(GraphDatabaseService graph, String filename,List<String> extras) {
 		this.graph = graph;
 		this.filename = filename;
+		this.extras = extras;
 		
 	}
 

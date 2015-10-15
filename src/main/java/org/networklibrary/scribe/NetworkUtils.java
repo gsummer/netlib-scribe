@@ -19,6 +19,7 @@ public class NetworkUtils {
 
 		return uniqueNeighbours;
 	}
+	
 
 	static public Set<Node> dfs(Set<Node> nodes, int maxDepth){
 		Set<Node> result = new HashSet<Node>();

@@ -11,6 +11,7 @@ import org.networklibrary.scribe.readers.ConnectNodesReader;
 import org.networklibrary.scribe.readers.ConnectSetsReader;
 import org.networklibrary.scribe.readers.CypherQueryReader;
 import org.networklibrary.scribe.readers.DumpEdgesReader;
+import org.networklibrary.scribe.readers.SampleComponentReader;
 import org.networklibrary.scribe.writers.CypherResultWriter;
 import org.networklibrary.scribe.writers.GraphWriter;
 import org.networklibrary.scribe.writers.impl.CypherTabWriter;
@@ -84,9 +85,14 @@ public class Scribe {
 			
 		case "dump_edges":
 			
-			DumpEdgesReader dumper = new DumpEdgesReader(graph,outputFiles.get(0));
+			DumpEdgesReader dumper = new DumpEdgesReader(graph,outputFiles.get(0),extras);
 			dumper.execute();
 
+			break;
+			
+		case "sample":
+			SampleComponentReader sampler = new SampleComponentReader(graph);
+			sampler.execute();
 			break;
 
 		default:
