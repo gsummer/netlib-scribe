@@ -12,6 +12,7 @@ import org.apache.commons.cli.Option;
 import org.apache.commons.cli.OptionBuilder;
 import org.apache.commons.cli.Options;
 import org.networklibrary.core.config.ConfigManager;
+import org.networklibrary.scribe.config.ScribeConfigManager;
 
 /**
  * Hello world!
@@ -29,14 +30,12 @@ public class App
     	Option queryOp = OptionBuilder.withArgName("[QUERY]").hasArg().withDescription("Cypher query to execute:").withType(String.class).create("q");
     	Option typeOp = OptionBuilder.withArgName("[OUTPUT TYPE]").hasArg().withDescription("Output data type:").withType(String.class).create("ot");
     	Option qtypeOp = OptionBuilder.withArgName("[QUERY TYPE]").hasArg().withDescription("type of query").withType(String.class).create("qt");
-    	Option configOp = OptionBuilder.hasArg().withDescription("Alternative config file").withLongOpt("config").withType(String.class).create("c");
     	Option extraOps = OptionBuilder.hasArg().withDescription("Extra configuration parameters for the execution").withType(String.class).create("x");
     	
     	options.addOption(help);
     	options.addOption(dbOp);
     	options.addOption(queryOp);
     	options.addOption(typeOp);
-    	options.addOption(configOp);
     	options.addOption(qtypeOp);
     	options.addOption(extraOps);
     	
@@ -71,12 +70,7 @@ public class App
             if(line.hasOption("qt")){
             	queryType = line.getOptionValue("qt");
             }
-            
-            String config = null;
-            if(line.hasOption("c")){
-            	config = line.getOptionValue("c");
-            }
-            
+                        
             List<String> extras = null;
             if(line.hasOption("x")){
             	extras = Arrays.asList(line.getOptionValues("x"));
@@ -84,15 +78,8 @@ public class App
             
             List<String> outputFiles = line.getArgList();
             
-            // eeesh should move that to the ConfigManager ctor
-            ConfigManager confMgr = null;
-            if(config != null){
-            	confMgr = new ConfigManager(config);
-            }
-            else {
-            	confMgr = new ConfigManager();
-            }
-
+            ScribeConfigManager confMgr = new ScribeConfigManager();
+            
             Scribe scribe = new Scribe(db,type,query,queryType,extras,outputFiles,confMgr);
             scribe.execute();
             
